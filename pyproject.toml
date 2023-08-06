@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "EntropyAnalysis"
+version = "0.0.1"
+dependencies = []
+authors = [
+    {name = "Maurice Lambert", email = "mauricelambert434@gmail.com"},
+]
+maintainers = [
+    {name = "Maurice Lambert", email = "mauricelambert434@gmail.com"},
+]
+description = 'This package analyzes file entropy (shannon entropy) for forensic or malware analysis'
+readme = {file = "README.md", content-type = "text/markdown"}
+# url = "https://github.com/mauricelambert/EntropyAnalysis"
+# download-url = "https://mauricelambert.github.io/info/python/security/EntropyAnalysis.pyz"
+classifiers = [
+    "Topic :: System",
+    "Topic :: Security",
+    "Environment :: Console",
+    "Topic :: System :: Shells",
+    'Operating System :: POSIX',
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Intended Audience :: Developers",
+    "Topic :: System :: System Shells",
+    'Operating System :: MacOS :: MacOS X',
+    "Programming Language :: Python :: 3.8",
+    'Operating System :: Microsoft :: Windows',
+    "Topic :: System :: Systems Administration",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
+keywords = ['entropy', 'entropy-analysis', 'malware-analysis', 'file-analysis', 'forensic', 'disk-analysis', 'security', 'cybersecurity']
+license = {text = "GPL-3.0 License"}
+requires-python = ">=3.8"
+
+[project.scripts]
+EntropyAnalysis = "EntropyAnalysis:main"
+
+[project.urls]
+"Github" = "https://github.com/mauricelambert/EntropyAnalysis"
+"Documentation" = "https://mauricelambert.github.io/info/python/security/EntropyAnalysis.html"
+"Python Executable" = "https://mauricelambert.github.io/info/python/security/EntropyAnalysis.pyz"
+"Windows Executable" = "https://mauricelambert.github.io/info/python/security/EntropyAnalysis.exe"
+
+[tool.setuptools]
+include-package-data = true
+platforms = ['Windows', 'Linux', "MacOS"]
+py-modules = ['EntropyAnalysis']
+packages = []
+script-files = []
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}

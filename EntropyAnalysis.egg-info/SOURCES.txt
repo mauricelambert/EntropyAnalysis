@@ -1,0 +1,12 @@
+EntropyAnalysis.py
+LICENSE.txt
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+EntropyAnalysis.egg-info/PKG-INFO
+EntropyAnalysis.egg-info/SOURCES.txt
+EntropyAnalysis.egg-info/dependency_links.txt
+EntropyAnalysis.egg-info/entry_points.txt
+EntropyAnalysis.egg-info/top_level.txt
