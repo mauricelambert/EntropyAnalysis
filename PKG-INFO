@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: EntropyAnalysis
-Version: 0.0.1
+Version: 0.0.2
 Summary: This package analyzes file entropy (shannon entropy) for forensic or malware analysis
 Home-page: https://github.com/mauricelambert/EntropyAnalysis
 Download-URL: https://mauricelambert.github.io/info/python/security/EntropyAnalysis.pyz
