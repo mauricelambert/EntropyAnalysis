@@ -25,7 +25,7 @@ This package analyzes file entropy (shannon entropy) for forensic or
 malware analysis
 """
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __author__ = "Maurice Lambert"
 __author_email__ = "mauricelambert434@gmail.com"
 __maintainer__ = "Maurice Lambert"
@@ -62,10 +62,11 @@ from io import BytesIO
 from _io import _IOBase
 from random import randint
 from os.path import isfile
+from dataclasses import dataclass
 from urllib.request import urlopen
 from collections.abc import Hashable
 from collections import Counter, deque
-from typing import Iterable, Tuple, Dict
+from typing import Iterable, Tuple, List
 from sys import stdout, exit, stdin, stderr
 from argparse import ArgumentParser, Namespace
 
@@ -77,6 +78,13 @@ else:
     USE_MATPLOTLIB = True
 
 colors = []
+
+
+@dataclass
+class Section:
+    label: str
+    start_position: int
+    size: int
 
 
 def generate_color() -> Tuple[float, float, float]:
@@ -199,7 +207,7 @@ def charts_chunks_file_entropy(
     file: _IOBase,
     chunk_size: int = 2048,
     part_size: int = None,
-    sections: Dict[str, int] = {},
+    sections: List[Section] = [],
 ) -> None:
     """
     This function prints chunks shannon entropy in console.
@@ -227,27 +235,14 @@ def charts_chunks_file_entropy(
     axes.axhline(4, color="g", label="Low entropy")
     axes.axhline(7.2, color="r", label="Very high and very suspicious entropy")
 
-    start_position = None
-    for next_name, end_position_ in sorted(
-        sections.items(), key=lambda x: x[1]
-    ):
-        if start_position is not None:
-            red, green, blue = generate_color()
-            axes.axvspan(
-                start_position,
-                end_position_,
-                label="Executable section " + name,
-                alpha=0.3,
-                color=(red / 255, green / 255, blue / 255),
-            )
-        name = next_name
-        start_position = end_position_
-    if start_position is not None:
+    for section in sections:
         red, green, blue = generate_color()
+        file.seek(section.start_position)
+        data = file.read(section.size)
         axes.axvspan(
-            end_position_,
-            end_position,
-            label="Executable section " + next_name,
+            section.start_position,
+            section.start_position + section.size,
+            label=f"{section.label} ({shannon_entropy(data)})",
             alpha=0.3,
             color=(red / 255, green / 255, blue / 255),
         )
