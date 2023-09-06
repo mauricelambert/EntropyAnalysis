@@ -25,7 +25,7 @@ This package analyzes file entropy (shannon entropy) for forensic or
 malware analysis
 """
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __author__ = "Maurice Lambert"
 __author_email__ = "mauricelambert434@gmail.com"
 __maintainer__ = "Maurice Lambert"
@@ -408,7 +408,6 @@ def parse_args() -> Namespace:
     parser.add_argument(
         "--part-size",
         "-p",
-        default=100,
         type=int,
         help="Define the part size, it should be lower than chunk size.",
     )
@@ -430,13 +429,19 @@ def main() -> int:
     arguments = parse_args()
 
     if arguments.from_url:
-        file = BytesIO(urlopen(arguments.file).read())
+        filecontent = urlopen(arguments.file).read()
+        filesize = len(filecontent)
+        file = BytesIO(filecontent)
     elif arguments.file == "-":
-        file = stdin.buffer
+        filecontent = stdin.buffer.read()
+        filesize = len(filecontent)
+        file = BytesIO(filecontent)
     else:
         if not isfile(arguments.file):
             print("File doesn't exists:", repr(arguments.file), file=stderr)
             return 2
+
+        filesize = getsize(arguments.file)
         file = open(arguments.file, "rb")
 
     full_file_entropy = get_full_file_entropy(file)
@@ -462,14 +467,16 @@ def main() -> int:
             print_parts_chunks_file_entropy(
                 file,
                 chunk_size=arguments.chunk_size,
-                part_size=arguments.part_size,
+                part_size=arguments.part_size or round(filesize / 100),
                 colors=arguments.no_colors,
             )
     else:
         charts_chunks_file_entropy(
             file,
             chunk_size=arguments.chunk_size,
-            part_size=None if arguments.chunk_only else arguments.part_size,
+            part_size=None
+            if arguments.chunk_only
+            else (arguments.part_size or round(filesize / 100)),
         )
 
     file.close()
