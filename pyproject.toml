@@ -1,6 +1,6 @@
 [project]
 name = "EntropyAnalysis"
-version = "0.0.4"
+version = "0.0.5"
 dependencies = []
 authors = [
     {name = "Maurice Lambert", email = "mauricelambert434@gmail.com"},

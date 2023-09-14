@@ -25,7 +25,7 @@ This package analyzes file entropy (shannon entropy) for forensic or
 malware analysis
 """
 
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 __author__ = "Maurice Lambert"
 __author_email__ = "mauricelambert434@gmail.com"
 __maintainer__ = "Maurice Lambert"
@@ -61,9 +61,9 @@ from math import log
 from io import BytesIO
 from _io import _IOBase
 from random import randint
-from os.path import isfile
 from dataclasses import dataclass
 from urllib.request import urlopen
+from os.path import isfile, getsize
 from collections.abc import Hashable
 from collections import Counter, deque
 from typing import Iterable, Tuple, List
